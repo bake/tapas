@@ -1,6 +1,6 @@
 # Tapas API client
 
-[![GoDoc](https://godoc.org/github.com/bake/tapas?status.svg)](https://godoc.org/github.com/bake/tapas)
+[![GoDoc](https://godoc.org/github.com/bake/tapas?status.svg)](https://pkg.go.dev/github.com/bake/tapas)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bake/tapas)](https://goreportcard.com/report/github.com/bake/tapas)
 
 A Go client for Tapas API at api.tapas.io.
