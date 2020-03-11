@@ -17,15 +17,19 @@ import (
 
 func main() {
 	t := tapas.New()
-	s, err := t.Series(2007)
+	_, cs, err := t.Search("sarah andersen")
 	if err != nil {
 		log.Fatal(err)
 	}
-	es, err := t.Episodes(2007)
+	s, err := t.Series(cs[0].ID)
 	if err != nil {
 		log.Fatal(err)
 	}
-	e, err := t.Episode(2007, es[0].ID)
+	es, err := t.Episodes(cs[0].ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	e, err := t.Episode(cs[0].ID, es[0].ID)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -4,6 +4,7 @@ package tapas
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
 
 	"github.com/pkg/errors"
 )
@@ -60,11 +61,12 @@ func New(options ...OptionFunc) *Client {
 }
 
 // get sends a HTTP GET request.
-func (c *Client) get(endpoint string) (json.RawMessage, error) {
+func (c *Client) get(endpoint string, query url.Values) (json.RawMessage, error) {
 	req, err := http.NewRequest(http.MethodGet, c.base+c.path+endpoint, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not create get request")
 	}
+	req.URL.RawQuery = query.Encode()
 	req.Header.Add("accept", "application/panda+json")
 	req.Header.Add("x-device-type", c.deviceType)
 	req.Header.Add("x-device-uuid", c.deviceUUID)

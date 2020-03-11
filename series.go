@@ -3,6 +3,7 @@ package tapas
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/pkg/errors"
@@ -44,51 +45,28 @@ type Series struct {
 	PublishDays              []string  `json:"publish_days"`
 	RectBannerURL            string    `json:"rect_banner_url"`
 	Restricted               bool      `json:"restricted"`
-	ReviewRating             Rating    `json:"review_rating"`
-	RgbHex                   string    `json:"rgb_hex"`
-	SaleEndDate              time.Time `json:"sale_end_date"`
-	SaleStartDate            time.Time `json:"sale_start_date"`
-	SaleType                 string    `json:"sale_type"`
-	SpLikeCount              int       `json:"sp_like_cnt"`
-	SubTitle                 string    `json:"sub_title"`
-	SubscribeCount           int       `json:"subscribe_cnt"`
-	SupportingAd             Image     `json:"supporting_ad"`
-	SupportingAdLink         string    `json:"supporting_ad_link"`
-	Tags                     []string  `json:"tags"`
-	Thumbnail                Image     `json:"thumb"`
-	Title                    string    `json:"title"`
-	Type                     string    `json:"type"`
-	UnusedKeyCount           int       `json:"unused_key_cnt"`
-	Up                       bool      `json:"up"`
-	UpdatedDate              time.Time `json:"updated_date"`
-	ViewCount                int       `json:"view_cnt"`
-	WopInterval              int       `json:"wop_interval"`
+	// ReviewRating             Rating    `json:"review_rating"`
+	RgbHex           string    `json:"rgb_hex"`
+	SaleEndDate      time.Time `json:"sale_end_date"`
+	SaleStartDate    time.Time `json:"sale_start_date"`
+	SaleType         string    `json:"sale_type"`
+	SpLikeCount      int       `json:"sp_like_cnt"`
+	SubTitle         string    `json:"sub_title"`
+	SubscribeCount   int       `json:"subscribe_cnt"`
+	SupportingAd     Image     `json:"supporting_ad"`
+	SupportingAdLink string    `json:"supporting_ad_link"`
+	Tags             []string  `json:"tags"`
+	Thumbnail        Image     `json:"thumb"`
+	Title            string    `json:"title"`
+	Type             string    `json:"type"`
+	UnusedKeyCount   int       `json:"unused_key_cnt"`
+	Up               bool      `json:"up"`
+	UpdatedDate      time.Time `json:"updated_date"`
+	ViewCount        int       `json:"view_cnt"`
+	WopInterval      int       `json:"wop_interval"`
 }
 
 func (s Series) String() string { return s.Title }
-
-// Creator of a comic.
-type Creator struct {
-	DisplayName      string `json:"display_name"`
-	ID               int    `json:"id"`
-	JoinedCreatorTip bool   `json:"joined_creator_tip"`
-	ProfilePicURL    string `json:"profile_pic_url"`
-	Staff            bool   `json:"staff"`
-	SupportBanner    Image  `json:"support_banner"`
-	Uname            string `json:"uname"`
-}
-
-func (c Creator) String() string { return c.DisplayName }
-
-// Genre of a comic.
-type Genre struct {
-	Abbr  string `json:"abbr"`
-	Books bool   `json:"books"`
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-}
-
-func (g Genre) String() string { return g.Name }
 
 // AgeRating of a comic.
 type AgeRating struct {
@@ -107,7 +85,7 @@ type Rating struct {
 
 // Series fetches a series.
 func (c *Client) Series(series int) (Series, error) {
-	raw, err := c.get(fmt.Sprintf("/series/%d", series))
+	raw, err := c.get(fmt.Sprintf("/series/%d", series), url.Values{})
 	if err != nil {
 		return Series{}, err
 	}

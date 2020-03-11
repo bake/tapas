@@ -3,6 +3,7 @@ package tapas
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/pkg/errors"
@@ -27,8 +28,9 @@ type EpisodeMeta struct {
 
 func (e EpisodeMeta) String() string { return e.Title }
 
+// Episodes fetches episodes of a series.
 func (c *Client) Episodes(series int) ([]EpisodeMeta, error) {
-	raw, err := c.get(fmt.Sprintf("/series/%d/episodes", series))
+	raw, err := c.get(fmt.Sprintf("/series/%d/episodes", series), url.Values{})
 	if err != nil {
 		return nil, err
 	}
